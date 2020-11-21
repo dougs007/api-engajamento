@@ -1,10 +1,8 @@
 version: "3.2"
-
 services:
-
-  php-engajamento:
-    container_name: php-engajamento
-    image: php-engajamento:7.4-fpm
+  api-php-engajamento:
+    container_name: api-php-engajamento
+    image: api-php-engajamento:7.4-fpm
     build:
       context: api
       dockerfile: Dockerfile
@@ -26,9 +24,8 @@ services:
     working_dir: /var/www/html/
     networks:
       - network-engajamento
-
-  nginx-engajamento:
-    container_name: nginx-engajamento
+  nginx-webserver-engajamento:
+    container_name: nginx-webserver-engajamento
     image: nginx:1.17-alpine
     volumes:
       - ./api/:/var/www/html/
@@ -36,10 +33,9 @@ services:
     ports:
       - "8082:80"
     depends_on:
-      - php-engajamento
+      - api-php-engajamento
     networks:
       - network-engajamento
-
   db-engajamento:
     container_name: db-engajamento
     image: postgres:9.6
@@ -56,7 +52,6 @@ services:
       - POSTGRES_DB=laravel
     networks:
       - network-engajamento
-
 networks:
   network-engajamento:
-driver: bridge
+    driver: bridge
