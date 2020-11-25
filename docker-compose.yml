@@ -16,7 +16,7 @@ services:
       - DB_DATABASE=laravel
       - DB_USERNAME=root
       - DB_PASSWORD=123456
-      - DB_HOST=database-engajamento
+      - DB_HOST=db-engajamento
       - DB_PORT=5432
       - DB_CONNECTION=pgsql
     ports:

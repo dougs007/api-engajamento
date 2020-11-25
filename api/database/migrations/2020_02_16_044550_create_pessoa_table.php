@@ -17,6 +17,7 @@ class CreatePessoaTable extends Migration
             $table->bigIncrements('id');
             $table->string('tx_nome', 200);
             $table->date('dt_nascimento');
+            $table->string('nu_ddd', 2)->nullable();
             $table->string('nu_telefone', 15)->nullable();
 
             $table->integer('deleted_id')->nullable()
