@@ -13,11 +13,21 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::group([
+    'namespace' => 'Auth',
+    'prefix' => 'auth',
+], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+//    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+});
+
 Route::group([
     'prefix' => 'v1',
-    'namespace' => 'Api'
+    'namespace' => 'Api',
+    'middleware' => 'auth.jwt'
 ], function () {
     Route::get('/helpedPersons', 'HelpedPersonApiController@index');
-//    Route::get('/tenants/{uuid}', 'TenantApiController@show');
-
 });

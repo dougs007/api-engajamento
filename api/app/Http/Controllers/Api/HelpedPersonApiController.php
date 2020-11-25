@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\HelpedPersonResource;
+use App\Http\Resources\Api\HelpedPersonResource;
 use App\Services\HelpedPersonService;
-use Illuminate\Http\Request;
 
 class HelpedPersonApiController extends Controller
 {
@@ -17,7 +16,7 @@ class HelpedPersonApiController extends Controller
     }
 
     /**
-     * Display a listing of the resource.     *
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
