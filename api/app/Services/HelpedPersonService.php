@@ -17,4 +17,34 @@ class HelpedPersonService
     {
         return $this->helpedPersonRepository->all();
     }
+
+    public function findHelpedPersonById(int $id)
+    {
+        return $this->helpedPersonRepository
+            ->find($id);
+    }
+
+    public function getAllByLeaderId(int $leaderId)
+    {
+        return $this->helpedPersonRepository
+            ->getAllByLeaderId($leaderId);
+    }
+
+    public function createHelpedPerson(array $data)
+    {
+        return $this->helpedPersonRepository
+            ->createHelpedPerson($data);
+    }
+
+    public function deleteHelpedPersonById(int $id)
+    {
+        if (
+            ! $helpedPerson = $this->findHelpedPersonById($id)
+        ) {
+            return ;
+        }
+
+        return $this->helpedPersonRepository
+            ->deleteHelpedPersonById($id);
+    }
 }

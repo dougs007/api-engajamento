@@ -14,20 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('login', 'Auth\LoginController@login');
+
+// Auth Routes.
 Route::group([
+    'prefix' => 'v1',
     'namespace' => 'Auth',
-    'prefix' => 'auth',
+    'middleware' => 'auth.jwt'
 ], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-//    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+
+    Route::post('auth/logout', 'LoginController@logout');
+    Route::post('auth/me', 'LoginController@me');
+    // Route::post('auth/refresh', 'LoginController@refresh');
 });
 
 Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api',
     'middleware' => 'auth.jwt'
-], function () {
-    Route::get('/helpedPersons', 'HelpedPersonApiController@index');
+], function ($request) {
+
+    // Helped Persons.
+    Route::get('/helpedPersons', 'HelpedPersonApiController@all');
+    Route::post('/helpedPersons', 'HelpedPersonApiController@createHelpedPerson');
+    Route::get('/helpedPersons/{personId}', 'HelpedPersonApiController@findHelpedPersonById');
+    Route::get('/helpedPersons/leader/{leaderId}', 'HelpedPersonApiController@getAllByLeaderId');
+    Route::delete('/helpedPersons/{leaderId}', 'HelpedPersonApiController@delete');
 });

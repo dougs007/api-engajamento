@@ -24,7 +24,7 @@ class StoreUpdateHelpedPerson extends FormRequest
     public function rules()
     {
         return [
-            //
+            'lider_id' => 'required'
         ];
     }
 }

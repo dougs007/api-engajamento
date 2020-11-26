@@ -15,6 +15,7 @@ class HelpedPersonResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'            => $this->id,
             'tx_nome'       => $this->tx_nome,
             'nu_ddd'        => $this->nu_ddd,
             'nu_telefone'   => $this->nu_telefone,

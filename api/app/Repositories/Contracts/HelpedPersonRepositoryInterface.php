@@ -5,6 +5,8 @@ namespace App\Repositories\Contracts;
 interface HelpedPersonRepositoryInterface
 {
     public function all();
-    public function createNewHelpedPerson(array $data);
-    public function getHelpedPerson(int $id);
+    public function find(int $id);
+    public function getAllByLeaderId(int $leaderId);
+    public function createHelpedPerson(array $data);
+    public function deleteHelpedPersonById(int $id);
 }

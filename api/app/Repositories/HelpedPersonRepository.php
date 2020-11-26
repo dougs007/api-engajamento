@@ -19,15 +19,26 @@ class HelpedPersonRepository implements HelpedPersonRepositoryInterface
         return $this->entity->all();
     }
 
-    public function createNewHelpedPerson(array $data)
+    public function find(int $id)
     {
-        $data['password'] = bcrypt($data['password']);
-
-//        return $this->entity->create($data);
+        return $this->entity
+            ->find($id);
     }
 
-    public function getHelpedPerson(int $id)
+    public function getAllByLeaderId(int $leaderId)
     {
+        return $this->entity
+            ->where("lider_id", "=", $leaderId)
+            ->get();
+    }
 
+    public function createHelpedPerson(array $data)
+    {
+        return $this->entity->create($data);
+    }
+
+    public function deleteHelpedPersonById(int $id)
+    {
+        return $this->find($id)->delete();
     }
 }

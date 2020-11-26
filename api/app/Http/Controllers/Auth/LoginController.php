@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\LeaderResource;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     /**
      * Get a JWT token via given credentials.
@@ -24,7 +24,9 @@ class AuthController extends Controller
             return $this->respondWithToken($token);
         }
 
-        return response()->json(['error' => 'Incorrect email or password !'], 401);
+        return response()
+            ->json(['error' => 'Incorrect email or password !'], 401)
+            ->header('Content-Type', 'application/json');
     }
 
     /**
@@ -35,7 +37,9 @@ class AuthController extends Controller
     public function me()
     {
         if ( !$me = $this->guard()->user() ) {
-            return response()->json(['error' => 'Sorry! Your token has expired!'], 401);
+            return response()
+                ->json(['error' => 'Sorry! Your token has expired!'], 401)
+                ->header('Content-Type', 'application/json');
         }
 
         return new LeaderResource($me);
@@ -50,7 +54,9 @@ class AuthController extends Controller
     {
         $this->guard()->logout();
 
-        return response()->json(['message' => 'User successfully logged out!']);
+        return response()
+            ->json(['message' => 'User successfully logged out!'])
+            ->header('Content-Type', 'application/json');
     }
 
     /**
