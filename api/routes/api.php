@@ -37,6 +37,7 @@ Route::group([
     // Helped Persons.
     Route::get('/helpedPersons', 'HelpedPersonApiController@all');
     Route::post('/helpedPersons', 'HelpedPersonApiController@createHelpedPerson');
+    Route::put('/helpedPersons/{personId}', 'HelpedPersonApiController@udpateHelpedPerson');
     Route::get('/helpedPersons/{personId}', 'HelpedPersonApiController@findHelpedPersonById');
     Route::get('/helpedPersons/leader/{leaderId}', 'HelpedPersonApiController@getAllByLeaderId');
     Route::delete('/helpedPersons/{leaderId}', 'HelpedPersonApiController@delete');

@@ -38,13 +38,15 @@ class HelpedPersonService
 
     public function deleteHelpedPersonById(int $id)
     {
-        if (
-            ! $helpedPerson = $this->findHelpedPersonById($id)
-        ) {
-            return ;
-        }
-
         return $this->helpedPersonRepository
             ->deleteHelpedPersonById($id);
+    }
+
+    public function updateHelpedPerson(array $data)
+    {
+        $this->helpedPersonRepository
+            ->updateHelpedPerson($data);
+
+        return $this->findHelpedPersonById($data['id']);
     }
 }

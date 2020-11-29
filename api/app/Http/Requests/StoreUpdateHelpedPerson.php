@@ -24,7 +24,11 @@ class StoreUpdateHelpedPerson extends FormRequest
     public function rules()
     {
         return [
-            'lider_id' => 'required'
+            'tx_nome'       => "required|string",
+            'nu_ddd'        => "required|integer|min:2",
+            'nu_telefone'   => "required|integer",
+            'dt_nascimento' => "required|date",
+            'lider_id'      => "required|integer",
         ];
     }
 }

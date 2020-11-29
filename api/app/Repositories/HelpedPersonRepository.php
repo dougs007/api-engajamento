@@ -41,4 +41,9 @@ class HelpedPersonRepository implements HelpedPersonRepositoryInterface
     {
         return $this->find($id)->delete();
     }
+
+    public function updateHelpedPerson(array $data)
+    {
+        return $this->find($data['id'])->update($data);
+    }
 }

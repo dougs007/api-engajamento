@@ -61,33 +61,12 @@ class HelpedPersonApiController extends Controller
         return HelpedPersonResource::collection($helpedPersons);
     }
 
-    public function createHelpedPerson(Request $request)
+    public function createHelpedPerson(StoreUpdateHelpedPerson $request)
     {
-        // Validate data
-        $validator = Validator::make($request->all(), [
-            "lider_id"      => "required",
-            "tx_nome"       => "required|max:100",
-            "dt_nascimento" => "required|date",
-            "nu_telefone"   => "required",
-            "nu_ddd"        => "required",
-        ]
-/*             [
-                'title.required' => 'Enter Title Post! ',
-                'content.required' => 'Enter Content Post !',
-            ] */
-        );
-        if($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Please fill in the blank fields',
-                'data'    => $validator->errors()
-            ], 400);
-        } else {
-            $newHelpedPerson = $this->helpedPersonService
-                ->createHelpedPerson($request->all());
+        $newHelpedPerson = $this->helpedPersonService
+            ->createHelpedPerson($request->all());
 
-            return new HelpedPersonResource($newHelpedPerson);
-        }
+        return new HelpedPersonResource($newHelpedPerson);
     }
 
     public function delete(int $id)
@@ -104,6 +83,23 @@ class HelpedPersonApiController extends Controller
         $this->helpedPersonService
             ->deleteHelpedPersonById($id);
 
-        return response()->json([], 200);
+        return response()->json([], Response::HTTP_OK);
+    }
+
+    public function udpateHelpedPerson(StoreUpdateHelpedPerson $request)
+    {
+        if ( !$helpedPersons = $this->helpedPersonService
+            ->findHelpedPersonById((int)$request->id)
+        ) {
+            return response()->json([
+                    "error" => "Helped Person not found !"
+                ], Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $helpedPersonUpdated = $this->helpedPersonService
+            ->updateHelpedPerson($request->all());
+
+        return new HelpedPersonResource($helpedPersonUpdated);
     }
 }

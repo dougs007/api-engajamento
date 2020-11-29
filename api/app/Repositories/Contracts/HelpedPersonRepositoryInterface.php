@@ -9,4 +9,5 @@ interface HelpedPersonRepositoryInterface
     public function getAllByLeaderId(int $leaderId);
     public function createHelpedPerson(array $data);
     public function deleteHelpedPersonById(int $id);
+    public function updateHelpedPerson(array $data);
 }
