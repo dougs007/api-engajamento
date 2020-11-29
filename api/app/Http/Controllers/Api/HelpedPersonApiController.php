@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\HelpedPersonResource;
 use App\Http\Requests\StoreUpdateHelpedPerson;
 use App\Services\HelpedPersonService;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Validator;
 
 class HelpedPersonApiController extends Controller
 {
@@ -22,7 +21,7 @@ class HelpedPersonApiController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
     public function all()
     {
@@ -83,7 +82,7 @@ class HelpedPersonApiController extends Controller
         $this->helpedPersonService
             ->deleteHelpedPersonById($id);
 
-        return response()->json([], Response::HTTP_OK);
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 
     public function udpateHelpedPerson(StoreUpdateHelpedPerson $request)
