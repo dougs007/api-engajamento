@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,13 +31,20 @@ Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api',
     'middleware' => 'auth.jwt'
-], function ($request) {
+], function () {
 
-    // Helped Persons.
+    # Helped Persons.
     Route::get('/helpedPersons', 'HelpedPersonApiController@all');
     Route::post('/helpedPersons', 'HelpedPersonApiController@createHelpedPerson');
     Route::put('/helpedPersons/{personId}', 'HelpedPersonApiController@udpateHelpedPerson');
     Route::get('/helpedPersons/{personId}', 'HelpedPersonApiController@findHelpedPersonById');
     Route::get('/helpedPersons/leader/{leaderId}', 'HelpedPersonApiController@getAllByLeaderId');
     Route::delete('/helpedPersons/{leaderId}', 'HelpedPersonApiController@delete');
+
+    # Activities
+    Route::get('/activities', 'ActivityApiController@all');
+    Route::post('/activities', 'ActivityApiController@createActivity');
+    Route::put('/activities/{activityId}', 'ActivityApiController@updateActivity');
+    Route::get('/activities/{activityId}', 'ActivityApiController@findActivityById');
+    Route::delete('/activities/{activityId}', 'ActivityApiController@delete');
 });

@@ -2,13 +2,15 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use App\Repositories\Contracts\{
-    HelpedPersonRepositoryInterface,
+    ActivityRepositoryInterface,
+    HelpedPersonRepositoryInterface
 };
 use App\Repositories\{
-    HelpedPersonRepository,
+    ActivityRepository,
+    HelpedPersonRepository
 };
-use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -19,9 +21,18 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /**
+         * OBS: For each, duplicate a line and declare the classes!
+         */
+
         $this->app->bind(
             HelpedPersonRepositoryInterface::class,
             HelpedPersonRepository::class
+        );
+
+        $this->app->bind(
+            ActivityRepositoryInterface::class,
+            ActivityRepository::class
         );
     }
 

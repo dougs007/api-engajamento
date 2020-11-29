@@ -37,7 +37,7 @@ class HelpedPersonRepository implements HelpedPersonRepositoryInterface
         return $this->entity->create($data);
     }
 
-    public function deleteHelpedPersonById(int $id)
+    public function deleteHelpedPerson(int $id)
     {
         return $this->find($id)->delete();
     }

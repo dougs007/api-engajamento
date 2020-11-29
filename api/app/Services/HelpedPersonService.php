@@ -39,7 +39,7 @@ class HelpedPersonService
     public function deleteHelpedPersonById(int $id)
     {
         return $this->helpedPersonRepository
-            ->deleteHelpedPersonById($id);
+            ->deleteHelpedPerson($id);
     }
 
     public function updateHelpedPerson(array $data)
