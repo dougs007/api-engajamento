@@ -47,4 +47,12 @@ Route::group([
     Route::put('/activities/{activityId}', 'ActivityApiController@updateActivity');
     Route::get('/activities/{activityId}', 'ActivityApiController@findActivityById');
     Route::delete('/activities/{activityId}', 'ActivityApiController@delete');
+
+    # Leaders
+    Route::get('/leaders', 'LeaderApiController@all');
+    Route::post('/leaders', 'LeaderApiController@createLeader');
+    Route::put('/leaders/{leaderId}', 'LeaderApiController@updateLeader');
+    Route::get('/leaders/{leaderId}', 'LeaderApiController@findLeaderById');
+    Route::delete('/leaders/{leaderId}', 'LeaderApiController@delete');
+
 });

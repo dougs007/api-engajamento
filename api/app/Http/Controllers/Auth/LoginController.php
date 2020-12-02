@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\AuthLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\LeaderResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -16,7 +18,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(AuthLogin $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -25,20 +27,20 @@ class LoginController extends Controller
         }
 
         return response()
-            ->json(['error' => 'Incorrect email or password !'], 401)
+            ->json(['error' => 'Incorrect email or password !'], Response::HTTP_UNAUTHORIZED)
             ->header('Content-Type', 'application/json');
     }
 
     /**
      * Get the authenticated User.
      *
-     * @return LeaderResource
+     * @return LeaderResource|response
      */
     public function me()
     {
         if ( !$me = $this->guard()->user() ) {
             return response()
-                ->json(['error' => 'Sorry! Your token has expired!'], 401)
+                ->json(['error' => 'Sorry! Your token has expired!'], Response::HTTP_UNAUTHORIZED)
                 ->header('Content-Type', 'application/json');
         }
 

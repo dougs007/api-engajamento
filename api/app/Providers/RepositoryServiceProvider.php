@@ -5,11 +5,13 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Contracts\{
     ActivityRepositoryInterface,
-    HelpedPersonRepositoryInterface
+    HelpedPersonRepositoryInterface,
+    LeaderRepositoryInterface,
 };
 use App\Repositories\{
     ActivityRepository,
-    HelpedPersonRepository
+    HelpedPersonRepository,
+    LeaderRepository,
 };
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -33,6 +35,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ActivityRepositoryInterface::class,
             ActivityRepository::class
+        );
+
+        $this->app->bind(
+            LeaderRepositoryInterface::class,
+            LeaderRepository::class
         );
     }
 

@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -17,8 +18,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'tx_nome', 'email', 'password', 'nu_telefone', 'bol_ativo', 'dt_nascimento',
-        'lider_id', 'deleted_id'
+        'tx_nome', 'email', 'password', 'nu_telefone', 'nu_ddd', 'bol_ativo',
+        'dt_nascimento', 'lider_id', 'deleted_id'
     ];
 
     /**
@@ -58,4 +59,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function leader()
+    {
+        return $this->belongsTo(User::class, 'lider_id',  'id');
+    }
+
 }
