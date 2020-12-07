@@ -29,7 +29,6 @@ class StoreUpdateHelpedPerson extends FormRequest
             'nu_telefone'   => "required|integer",
             'dt_nascimento' => "required|date",
             'lider_id'      => "required|integer",
-            'password'      => 'required'
         ];
     }
 }

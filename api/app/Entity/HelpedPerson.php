@@ -20,12 +20,12 @@ class HelpedPerson extends Model
     ];
 
     /**
-     * Relacionamento de Líder com Pessoas Ajudadas.
+     * Relationship between Leader and Helped Person.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-/*    public function lider()
+    public function getLeader()
     {
-        return $this->belongsTo(\App\Entity\User::class, 'lider_id', 'id');
-    }*/
+        return $this->belongsTo(User::class, 'lider_id', 'id');
+    }
 }

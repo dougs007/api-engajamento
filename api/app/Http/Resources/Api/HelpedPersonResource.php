@@ -20,7 +20,7 @@ class HelpedPersonResource extends JsonResource
             'nu_ddd'        => $this->nu_ddd,
             'nu_telefone'   => $this->nu_telefone,
             'dt_nascimento' => $this->dt_nascimento,
-//            'lider_id'      => $this->lider_id,
+            'lider_id'      => new LeaderResource($this->getLeader),
         ];
     }
 }
