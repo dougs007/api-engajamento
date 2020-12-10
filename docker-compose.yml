@@ -52,6 +52,26 @@ services:
       - POSTGRES_DB=laravel
     networks:
       - network-engajamento
+    # Documentação da API altamente recomendado para desenvolvedores
+  api-doc:
+    container_name: engajamento-api-doc
+    image: quay.io/bukalapak/snowboard:v1.7.0
+    entrypoint:
+      - snowboard
+      - --watch
+      - --watch-interval
+      - 50ms
+      - html
+      - -o
+      - output.html
+      - -b
+      - 0.0.0.0:8088
+      - -s
+      - API_Specification.apib
+    ports:
+      - "8088:8088"
+    volumes:
+      - .:/doc
 networks:
   network-engajamento:
     driver: bridge
