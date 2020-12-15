@@ -12,4 +12,13 @@ npm-debug.log
 yarn-error.log
 *.log
 
+/database/
+
+# IDE'S
+.idea/
+.vscode/
+.nbproject/
+
+# API Documentation
 output.html
+
