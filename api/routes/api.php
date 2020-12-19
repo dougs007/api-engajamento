@@ -55,4 +55,9 @@ Route::group([
     Route::get('/leaders/{leaderId}', 'LeaderApiController@findLeaderById');
     Route::delete('/leaders/{leaderId}', 'LeaderApiController@delete');
 
+    # Regimentation
+    Route::get('/regimentation', 'RegimentationApiController@getRegimentation');
+    Route::post('/regimentation/review', 'RegimentationApiController@createReview');
+    Route::delete('/regimentation/{reviewId}', 'RegimentationApiController@deleteReview');
+
 });
