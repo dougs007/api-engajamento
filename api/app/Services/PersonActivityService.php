@@ -30,4 +30,10 @@ class PersonActivityService
         return $this->personActivityRepository
             ->deleteReview($id);
     }
+
+    public function getRegimentation(array $data)
+    {
+        return $this->personActivityRepository
+            ->getRegimentation($data);
+    }
 }

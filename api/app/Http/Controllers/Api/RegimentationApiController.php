@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetRegimentation;
 use App\Http\Requests\StoreUpdatePersonActivity;
 use App\Http\Resources\Api\PersonActivityResource;
 use App\Services\PersonActivityService;
@@ -42,5 +43,13 @@ class RegimentationApiController extends Controller
             ->deleteReview($reviewId);
 
         return response()->json([], Response::HTTP_NO_CONTENT);
+    }
+
+    public function getRegimentation(GetRegimentation $request)
+    {
+        $regimentation = $this->personActivityService
+            ->getRegimentation($request->toArray());
+
+        return response()->json(["data" => $regimentation]);
     }
 }
