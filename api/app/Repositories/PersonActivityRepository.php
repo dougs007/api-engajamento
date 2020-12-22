@@ -67,7 +67,13 @@ class PersonActivityRepository implements PersonActivityRepositoryInterface
                 ->get();
 
             foreach($atividades as $atividade) {
-                $atividade["thumbsup"] = !!$atividade["thumbsup"];
+                if (is_int($atividade["thumbsup"])) {
+                    $atividade["reviewId"] = $atividade["thumbsup"];
+                    $atividade["thumbsup"] = !!$atividade["thumbsup"];
+                } else {
+                    $atividade["thumbsup"] = !!$atividade["thumbsup"];
+                    $atividade["reviewId"] = 0;
+                }
                 $retorno['helpedPerson'][$pessoa['id']]['atividade'][] = $atividade;
             }
         }
