@@ -29,7 +29,6 @@ class StoreUpdateLeader extends FormRequest
             'nu_ddd'        => 'integer',
             'nu_telefone'   => 'integer',
             'email'         => 'required|email',
-            'lider_id'      => 'integer|exists:users',
             'password'
         ];
     }
