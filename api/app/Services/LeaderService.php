@@ -33,7 +33,8 @@ class LeaderService
 
     public function updateLeader(array $data)
     {
-        if (in_array('password', $data) && !is_null($data["password"])) {
+        # check if password has been past and if has value
+        if (array_key_exists('password', $data) && !!$data["password"]) {
             $data["password"] = bcrypt($data["password"]);
         }
         $this->leaderRepository
