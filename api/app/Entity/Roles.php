@@ -9,6 +9,9 @@ class Roles extends Model
     Use SoftDeletes;
     protected $table = 'tb_perfil';
 
+    const ADMIN  = 1;
+    const LEADER = 2;
+
     /**
      * The attributes that are mass assignable.
      *

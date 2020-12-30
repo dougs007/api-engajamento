@@ -13,7 +13,7 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         # Líderes/Usuários
-        Roles::create(['tx_nome' => 'Administrador']);
-        Roles::create(['tx_nome' => 'Líder']);
+        Roles::create(["id" => Roles::ADMIN, "tx_nome" => "Administrador"]);
+        Roles::create(["id" => Roles::LEADER, "tx_nome" => "Líder"]);
     }
 }

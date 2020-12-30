@@ -27,6 +27,8 @@ class LeaderService
     public function createLeader(array $data)
     {
         $data["password"] = bcrypt($data["password"]);
+        $data = $this->roleTreat($data);
+
         return $this->leaderRepository
             ->createLeader($data);
     }
@@ -52,5 +54,17 @@ class LeaderService
 
         return $this->leaderRepository
             ->deleteLeader($id);
+    }
+
+    private function roleTreat($data)
+    {
+        switch ($data["perfil_id"]) {
+            case \App\Entity\Roles::ADMIN:
+                $data["lider_id"] = null;
+                break;
+            case \App\Entity\Roles::LEADER:
+                break;
+        }
+        return $data;
     }
 }
