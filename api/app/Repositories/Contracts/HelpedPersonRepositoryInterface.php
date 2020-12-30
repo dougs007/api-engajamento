@@ -8,6 +8,6 @@ interface HelpedPersonRepositoryInterface
     public function find(int $id);
     public function getAllByLeaderId(int $leaderId);
     public function createHelpedPerson(array $data);
-    public function deleteHelpedPerson(int $id);
+    public function deleteHelpedPerson(int $id, int $deletedId);
     public function updateHelpedPerson(array $data);
 }

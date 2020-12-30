@@ -35,8 +35,11 @@ class LeaderRepository implements LeaderRepositoryInterface
         return $this->find($data['id'])->update($data);
     }
 
-    public function deleteLeader(int $id)
+    public function deleteLeader(int $id, int $deletedId)
     {
-        return $this->find($id)->delete();
+        $leader = $this->find($id);
+        $leader->deleted_id = $deletedId;
+        $leader->deleted_at = \Carbon\Carbon::now();
+        $leader->save();
     }
 }
