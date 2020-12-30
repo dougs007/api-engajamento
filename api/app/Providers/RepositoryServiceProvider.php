@@ -7,11 +7,14 @@ use App\Repositories\Contracts\{
     ActivityRepositoryInterface,
     HelpedPersonRepositoryInterface,
     LeaderRepositoryInterface,
+    PersonActivityRepositoryInterface
 };
+
 use App\Repositories\{
     ActivityRepository,
     HelpedPersonRepository,
     LeaderRepository,
+    PersonActivityRepository
 };
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -40,6 +43,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             LeaderRepositoryInterface::class,
             LeaderRepository::class
+        );
+
+        $this->app->bind(
+        PersonActivityRepositoryInterface::class,
+        PersonActivityRepository::class
         );
     }
 
