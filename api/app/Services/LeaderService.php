@@ -33,7 +33,9 @@ class LeaderService
 
     public function updateLeader(array $data)
     {
-        $data["password"] = bcrypt($data["password"]);
+        if (in_array('password', $data) && !is_null($data["password"])) {
+            $data["password"] = bcrypt($data["password"]);
+        }
         $this->leaderRepository
             ->updateLeader($data);
 

@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'tx_nome', 'email', 'password', 'nu_telefone', 'nu_ddd', 'bol_ativo',
-        'dt_nascimento', 'lider_id', 'deleted_id'
+        'dt_nascimento', 'lider_id', 'deleted_id', 'perfil_id'
     ];
 
     /**
@@ -63,5 +63,10 @@ class User extends Authenticatable implements JWTSubject
     public function leader()
     {
         return $this->belongsTo(User::class, 'lider_id',  'id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Roles::class, 'perfil_id',  'id');
     }
 }
