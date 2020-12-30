@@ -29,6 +29,9 @@ class CreateUsersTable extends Migration
             $table->integer('lider_id')->nullable()->comment('Autorelacionamento de líderes');
             $table->foreign('lider_id')->references('id')->on('users');
 
+            $table->integer('perfil_id')->nullable();
+            $table->foreign('perfil_id')->references('id')->on('tb_perfil');
+
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
