@@ -42,12 +42,9 @@ class LeaderService
 
     public function deleteLeader(int $id)
     {
-        # todo finalizar lógica de update salvando deleted_id;
-        $data["deleted_id"] = auth()->user()->id;
-        $data["deleted_at"] = 'now()';
-        $data["id"] = $id;
+        $deletedId = auth()->user()->id;
 
         return $this->leaderRepository
-            ->deleteLeader($id);
+            ->deleteLeader($id, $deletedId);
     }
 }
