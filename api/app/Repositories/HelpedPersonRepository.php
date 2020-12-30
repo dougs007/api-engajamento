@@ -16,7 +16,9 @@ class HelpedPersonRepository implements HelpedPersonRepositoryInterface
 
     public function all()
     {
-        return $this->entity->all();
+        return $this->entity
+            ->orderBy("tx_nome", "ASC")
+            ->get();
     }
 
     public function find(int $id)
@@ -37,9 +39,12 @@ class HelpedPersonRepository implements HelpedPersonRepositoryInterface
         return $this->entity->create($data);
     }
 
-    public function deleteHelpedPerson(int $id)
+    public function deleteHelpedPerson(int $id, int $deletedId)
     {
-        return $this->find($id)->delete();
+        $helpedPerson = $this->find($id);
+        $helpedPerson->deleted_id = $deletedId;
+        $helpedPerson->deleted_at = \Carbon\Carbon::now();
+        $helpedPerson->save();
     }
 
     public function updateHelpedPerson(array $data)

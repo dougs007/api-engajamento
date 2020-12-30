@@ -36,10 +36,12 @@ class HelpedPersonService
             ->createHelpedPerson($data);
     }
 
-    public function deleteHelpedPersonById(int $id)
+    public function deleteHelpedPersonById(int $idHelpedPerson)
     {
+        $deletedId = auth()->user()->id;
+
         return $this->helpedPersonRepository
-            ->deleteHelpedPerson($id);
+            ->deleteHelpedPerson($idHelpedPerson, $deletedId);
     }
 
     public function updateHelpedPerson(array $data)
