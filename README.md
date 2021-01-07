@@ -54,7 +54,7 @@ docker-compose up -d
 
 2. Execute o comando abaixo para criar as tabelas e popular registros fake na base de dados
 ```sh
-docker-exec -it api-php-engajamento /bin/bash -c'php artisan migrate:fresh --seed'
+docker exec -it api-php-engajamento /bin/bash -c 'php artisan migrate:fresh --seed'
 ```
 
 
