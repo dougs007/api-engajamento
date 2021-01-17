@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\LeaderResource;
 use App\Http\Requests\StoreUpdateLeader;
 use App\Services\LeaderService;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class LeaderApiController extends Controller
@@ -18,16 +17,11 @@ class LeaderApiController extends Controller
         $this->leaderService = $leaderService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return AnonymousResourceCollection
-     */
     public function all()
     {
-        $leader = $this->leaderService->all();
+        $leaders = $this->leaderService->allByLeaderId();
 
-        return LeaderResource::collection($leader);
+        return LeaderResource::collection($leaders);
     }
 
     public function findLeaderById(int $id)

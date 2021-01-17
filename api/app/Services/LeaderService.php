@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\LeaderRepositoryInterface;
+use App\Entity\Roles as Role;
 
 class LeaderService
 {
@@ -63,5 +64,15 @@ class LeaderService
                 break;
         }
         return $data;
+    }
+
+    public function allByLeaderId()
+    {
+        $user = auth()->user();
+        $loggedLeaderId = $user->id;
+        $isAdmin = $user->perfil_id == Role::ADMIN;
+
+        return $this->leaderRepository
+            ->allByLeaderId($loggedLeaderId, $isAdmin);
     }
 }

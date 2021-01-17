@@ -31,7 +31,8 @@ class PersonActivityRepository implements PersonActivityRepositoryInterface
     public function deleteReview(int $id)
     {
         return $this->entity
-            ->destroy($id);
+            ->find($id)
+            ->forceDelete();
     }
 
     public function getRegimentation(array $data)

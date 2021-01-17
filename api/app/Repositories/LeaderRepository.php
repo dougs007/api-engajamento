@@ -42,4 +42,24 @@ class LeaderRepository implements LeaderRepositoryInterface
         $leader->deleted_at = \Carbon\Carbon::now();
         $leader->save();
     }
+
+    /**
+     * Get logged in leader and the leaders of this leader.
+     *
+     * @param int $loggedLeaderId
+     * @param bool $isAdmin
+     * @return mixed
+     */
+    public function allByLeaderId(int $loggedLeaderId, bool $isAdmin)
+    {
+        return $this->entity
+            ->where(function($query) use ($isAdmin, $loggedLeaderId) {
+                if (!$isAdmin) {
+                    $query->where("lider_id", "=", $loggedLeaderId);
+                    $query->orWhere("id", "=", $loggedLeaderId);
+                }
+            })
+            ->orderBy("tx_nome", "asc")
+            ->get();
+    }
 }
