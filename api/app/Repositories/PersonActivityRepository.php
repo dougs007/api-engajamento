@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Entity\Activity;
-use App\Entity\HelpedPerson;
-use App\Entity\PersonActivity;
+use App\Entity\{Activity, HelpedPerson, PersonActivity};
 use App\Repositories\Contracts\PersonActivityRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
