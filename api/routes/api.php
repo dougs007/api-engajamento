@@ -55,4 +55,14 @@ Route::group([
     Route::get('/leaders/{leaderId}', 'LeaderApiController@findLeaderById');
     Route::delete('/leaders/{leaderId}', 'LeaderApiController@delete');
 
+    # Regimentation
+    Route::get('/regimentation', 'RegimentationApiController@getRegimentation');
+    Route::post('/regimentation/review', 'RegimentationApiController@createReview');
+    Route::delete('/regimentation/{reviewId}', 'RegimentationApiController@deleteReview');
+
+    # Reports
+    Route::get('/report/leaders/done', 'ReportApiController@leadersThatHaveDone');
+    Route::get('/report/leaders/dont', 'ReportApiController@leadersThatHaventDone');
+    Route::get('/report/leaders/double', 'ReportApiController@leadersThatHaveDouble');
+    Route::get('/report/leaders/triple-or-more', 'ReportApiController@leadersThatHaveTripleOrmore');
 });

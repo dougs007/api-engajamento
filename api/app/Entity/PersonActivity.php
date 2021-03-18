@@ -17,4 +17,14 @@ class PersonActivity extends Model
     protected $fillable = [
         'dt_periodo', 'atividade_id', 'pessoa_id'
     ];
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class, 'atividade_id',  'id');
+    }
+
+    public function helpedPerson()
+    {
+        return $this->belongsTo(HelpedPerson::class, 'pessoa_id',  'id');
+    }
 }

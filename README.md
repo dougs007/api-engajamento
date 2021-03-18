@@ -52,7 +52,13 @@ docker-compose up -d
 
 *Verifique se sua internet está estável, pois isso poderá levar um tempo (3 min)*
 
-2. Após finalizado o passo acima, pule para o passo 3.
+2. Execute o comando abaixo para criar as tabelas e popular registros fake na base de dados
+```sh
+docker exec -it api-php-engajamento /bin/bash -c 'php artisan migrate:fresh --seed'
+```
+
+
+3. Após finalizado o passo acima, pule para o passo 3.
 ---
 
 ### 🗄 2 Utilizar sem Docker.

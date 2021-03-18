@@ -22,6 +22,7 @@ class LeaderResource extends JsonResource
             'nu_telefone'   => $this->nu_telefone,
             'email'         => $this->email,
             'lider_id'      => $this->lider_id ? new LeaderResource($this->leader) : null,
+            "perfil"        => new RoleResource($this->role),
         ];
     }
 }

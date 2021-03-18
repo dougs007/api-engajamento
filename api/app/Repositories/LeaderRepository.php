@@ -35,8 +35,31 @@ class LeaderRepository implements LeaderRepositoryInterface
         return $this->find($data['id'])->update($data);
     }
 
-    public function deleteLeader(int $id)
+    public function deleteLeader(int $id, int $deletedId)
     {
-        return $this->find($id)->delete();
+        $leader = $this->find($id);
+        $leader->deleted_id = $deletedId;
+        $leader->deleted_at = \Carbon\Carbon::now();
+        $leader->save();
+    }
+
+    /**
+     * Get logged in leader and the leaders of this leader.
+     *
+     * @param int $loggedLeaderId
+     * @param bool $isAdmin
+     * @return mixed
+     */
+    public function allByLeaderId(int $loggedLeaderId, bool $isAdmin)
+    {
+        return $this->entity
+            ->where(function($query) use ($isAdmin, $loggedLeaderId) {
+                if (!$isAdmin) {
+                    $query->where("lider_id", "=", $loggedLeaderId);
+                    $query->orWhere("id", "=", $loggedLeaderId);
+                }
+            })
+            ->orderBy("tx_nome", "asc")
+            ->get();
     }
 }
