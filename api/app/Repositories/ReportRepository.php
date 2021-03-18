@@ -2,76 +2,86 @@
 
 namespace App\Repositories;
 
-use App\Entity\User;
+use App\Http\Requests\GetReportsLeaders;
 use App\Repositories\Contracts\ReportRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class ReportRepository implements ReportRepositoryInterface
 {
-//    protected $entity;
 
-/*    public function __construct(Activity $activity)
+    public function leadersThatHaveDone(GetReportsLeaders $request): array
     {
-        $this->entity = $activity;
-    }*/
-
-    public function leadersThatHaveDone()
-    {
-        $params = [
-            "initial_date" => "2021-02-15",
-            "final_date" => "2021-02-21",
-        ];
-        $reportLeadersThatHaveDone = DB::table('users as u')
-            ->selectRaw("
-                u.id,
-                u.tx_nome,
+        return DB::select("
+            SELECT
+                u.id, u.tx_nome,
                 SUM(CASE WHEN ap.atividade_id = 1 THEN 1 ELSE 0 END) as qtdRevisionista,
                 SUM(CASE WHEN ap.atividade_id = 2 THEN 1 ELSE 0 END) as qtdNomes,
-                SUM(CASE WHEN ap.atividade_id = 3 THEN 1 ELSE 0 END) as qtdMensagens,
+                SUM(CASE WHEN ap.atividade_id = 3 THEN 1 ELSE 0 END) as qtdMenssagens,
                 SUM(CASE WHEN ap.atividade_id = 4 THEN 1 ELSE 0 END) as qtdLigacoes,
                 SUM(CASE WHEN ap.atividade_id = 5 THEN 1 ELSE 0 END) as qtdVisitas,
                 SUM(CASE WHEN ap.atividade_id = 6 THEN 1 ELSE 0 END) as qtdRevisao
-            ")
-            ->join("tb_pessoas p", function($join) {
-                $join->on("u.id", "=",  "p.lider_id");
-                $join->on("p.deleted_at", "=", "NULL");
-            })
-            ->join("tb_atividades_pessoas ap", function($join) use ($params) {
-                $join->on("p.id", "=", "ap.pessoa_id");
-                $join->on("ap.deleted_at", "=", "NULL");
-                $join->on(DB::raw("TO_CHAR(dt_periodo, 'YYYY-MM-DD')", "BETWEEN", "'{$params['initial_date']}'
-                    AND '{$params['final_date']}')")
-                );
-            })
-            ->where("u.bol_ativo", "=", "A")
-            ->where("u.deleted_at", "=", "NULL")
-            ->groupBy("u.id", "u.tx_nome")
-            ->havingRaw("
-                	SUM(CASE WHEN ap.atividade_id = 1 THEN 1 ELSE 0 END) = 1
-                    AND SUM(CASE WHEN ap.atividade_id = 2 THEN 1 ELSE 0 END) = 1
-                    AND SUM(CASE WHEN ap.atividade_id = 3 THEN 1 ELSE 0 END) = 4
-                    AND SUM(CASE WHEN ap.atividade_id = 4 THEN 1 ELSE 0 END) = 4
-                    AND SUM(CASE WHEN ap.atividade_id = 5 THEN 1 ELSE 0 END) = 2
-                    AND SUM(CASE WHEN ap.atividade_id = 6 THEN 1 ELSE 0 END) = 1
-            ")
-//            ->toSql();
-            ->get();
-
-        return $reportLeadersThatHaveDone;
+            FROM users u
+                JOIN tb_pessoas p ON u.id = p.lider_id AND p.deleted_at IS NULL
+                JOIN tb_atividades_pessoas ap ON(
+                    p.id = ap.pessoa_id
+                    AND ap.deleted_at IS NULL
+                    AND (TO_CHAR(dt_periodo, 'YYYY-MM-DD') BETWEEN '{$request['dt_begin']}' AND '{$request['dt_until']}')
+                )
+            WHERE
+                u.bol_ativo = 'A' AND u.deleted_at IS NULL
+            GROUP BY
+                u.id, u.tx_nome
+            HAVING
+                SUM(CASE WHEN ap.atividade_id = 1 THEN 1 ELSE 0 END) >= 1
+                AND SUM(CASE WHEN ap.atividade_id = 2 THEN 1 ELSE 0 END) >= 1
+                AND SUM(CASE WHEN ap.atividade_id = 3 THEN 1 ELSE 0 END) >= 4
+                AND SUM(CASE WHEN ap.atividade_id = 4 THEN 1 ELSE 0 END) >= 4
+                AND SUM(CASE WHEN ap.atividade_id = 5 THEN 1 ELSE 0 END) >= 2
+                AND SUM(CASE WHEN ap.atividade_id = 6 THEN 1 ELSE 0 END) >= 1
+            ;
+        ");
     }
 
-    public function leadersThatHaveDont()
+    public function leadersThatHaventDone(GetReportsLeaders $request): array
     {
-        // TODO: Implement leadersThatHaveDont() method.
+        return DB::select("
+            SELECT
+                u.id, u.tx_nome,
+                SUM(CASE WHEN ap.atividade_id = 1 THEN 1 ELSE 0 END) as qtdRevisionista,
+                SUM(CASE WHEN ap.atividade_id = 2 THEN 1 ELSE 0 END) as qtdNomes,
+                SUM(CASE WHEN ap.atividade_id = 3 THEN 1 ELSE 0 END) as qtdMenssagens,
+                SUM(CASE WHEN ap.atividade_id = 4 THEN 1 ELSE 0 END) as qtdLigacoes,
+                SUM(CASE WHEN ap.atividade_id = 5 THEN 1 ELSE 0 END) as qtdVisitas,
+                SUM(CASE WHEN ap.atividade_id = 6 THEN 1 ELSE 0 END) as qtdRevisao
+            FROM users u
+                JOIN tb_pessoas p ON u.id = p.lider_id AND p.deleted_at IS NULL
+                JOIN tb_atividades_pessoas ap ON(
+                    p.id = ap.pessoa_id
+                    AND ap.deleted_at IS NULL
+                    AND (TO_CHAR(dt_periodo, 'YYYY-MM-DD') BETWEEN '{$request['dt_begin']}' AND '{$request['dt_until']}')
+                )
+            WHERE
+                u.bol_ativo = 'A' AND u.deleted_at IS NULL
+            GROUP BY
+                u.id, u.tx_nome
+            HAVING
+                SUM(CASE WHEN ap.atividade_id = 1 THEN 1 ELSE 0 END) = 0
+                OR SUM(CASE WHEN ap.atividade_id = 2 THEN 1 ELSE 0 END) = 0
+                OR SUM(CASE WHEN ap.atividade_id = 3 THEN 1 ELSE 0 END) = 0
+                OR SUM(CASE WHEN ap.atividade_id = 4 THEN 1 ELSE 0 END) = 0
+                OR SUM(CASE WHEN ap.atividade_id = 5 THEN 1 ELSE 0 END) = 0
+                OR SUM(CASE WHEN ap.atividade_id = 6 THEN 1 ELSE 0 END) = 0
+            ;
+        ");
     }
 
-    public function leadersThatHaveDouble()
+    public function leadersThatHaveDouble(GetReportsLeaders $request): array
     {
-        // TODO: Implement leadersThatHaveDouble() method.
+        return [];
     }
 
-    public function leadersThatHaveTripleOrMore()
+    public function leadersThatHaveTripleOrMore(GetReportsLeaders $request): array
     {
-        // TODO: Implement leadersThatHaveTripleOrMore() method.
+        return [];
     }
 }

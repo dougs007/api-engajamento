@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\ActivityResource;
-use App\Http\Requests\StoreUpdateActivity;
+use App\Http\Requests\GetReportsLeaders;
 use App\Services\ReportService;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class ReportApiController extends Controller
@@ -18,12 +16,31 @@ class ReportApiController extends Controller
         $this->reportService = $reportService;
     }
 
-    public function leadersThatHaveDone()
+    public function leadersThatHaveDone(GetReportsLeaders $request): \Illuminate\Http\JsonResponse
     {
-        $activity = $this->reportService->leadersThatHaveDone();
+        $leaders = $this->reportService->leadersThatHaveDone($request);
 
-//        return new ActivityResource($activity);
-        return response()->json($activity, Response::HTTP_OK);
+        return response()->json($leaders, Response::HTTP_OK);
     }
 
+    public function leadersThatHaventDone(GetReportsLeaders $request): \Illuminate\Http\JsonResponse
+    {
+        $leaders = $this->reportService->leadersThatHaventDone($request);
+
+        return response()->json($leaders, Response::HTTP_OK);
+    }
+
+    public function leadersThatHaveDouble(GetReportsLeaders $request): \Illuminate\Http\JsonResponse
+    {
+        $leaders = $this->reportService->leadersThatHaveDouble($request);
+
+        return response()->json($leaders, Response::HTTP_OK);
+    }
+
+    public function leadersThatHaveTripleOrmore(GetReportsLeaders $request): \Illuminate\Http\JsonResponse
+    {
+        $leaders = $this->reportService->leadersThatHaveTripleOrmore($request);
+
+        return response()->json($leaders, Response::HTTP_OK);
+    }
 }
